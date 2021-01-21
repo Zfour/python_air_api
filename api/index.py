@@ -46,10 +46,3 @@ def getdata():
         print(daylist)
         print(lasttime)
 
-
-def loopMonitor():
- while True:
-  getdata()
-  #30s检查一次
-  time.sleep(600)
-loopMonitor()
