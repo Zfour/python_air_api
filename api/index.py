@@ -46,3 +46,6 @@ def getdata():
         print(daylist)
         print(lasttime)
 
+
+getdata()
+
