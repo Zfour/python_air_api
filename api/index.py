@@ -34,18 +34,19 @@ def getdata():
             "area": item.find_all('a', class_='pjadt_location')[0].text
         }
         datalist.append(itembox)
-    global lasttime
-    if lasttime == timedata:
-        print("数据未更新")
-    else:
-        lasttime = timedata
-        aqidata = Aqidata()
-        aqidata.set('time',timedata)
-        aqidata.set('data', datalist)
-        aqidata.save()
-        print(daylist)
-        print(lasttime)
-
-
-getdata()
-
+    aqidata = Aqidata()
+    aqidata.set('time',timedata)
+    aqidata.set('data', datalist)
+    aqidata.save()
+    print(daylist)
+    print(lasttime)
+    return  timedata
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        text = getdata()
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(text.encode())
+        return
