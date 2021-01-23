@@ -48,7 +48,7 @@ def getdata():
     lasttime = query.find()
     # 执行查询，返回数组
     if lasttime[0].get('time') == timedata:
-        timedata = "请求重复，最新数据为：" + timedata
+        timedata = "请求重复，最新数据为：" + timedata[0]
     else:
         aqidata.save()
     print(daylist)
