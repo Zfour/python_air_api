@@ -37,7 +37,20 @@ def getdata():
     aqidata = Aqidata()
     aqidata.set('time',timedata)
     aqidata.set('data', datalist)
-    aqidata.save()
+    query = Aqidata.query
+    # 为查询创建别名
+    query.descending('createdAt')
+    # 选择排序方式
+    query.limit(1)
+    # 限定数量
+    query.select('time')
+    # 选择类
+    lasttime = query.find()
+    # 执行查询，返回数组
+    if lasttime[0].get('time') == timedata:
+        timedata = "请求重复，最新数据为：" + timedata
+    else:
+        aqidata.save()
     print(daylist)
     print(lasttime)
     return  timedata
